@@ -89,6 +89,75 @@ You should see the SmokePing dashboard.
   docker-compose restart
   ```
 
+## 7. Configuring Ping Frequency (Database Config)
+
+To adjust how often SmokePing sends pings (the probe frequency), you need to edit the `Database` section in the configuration file:
+
+1. Open the `config/Database` file (created after the first run).
+
+2. The file should look like this:
+
+   ```sh
+   *** Database ***
+   step     = 300
+   pings    = 20
+   # ... other settings ...
+   ```
+
+   - `step` is the interval in seconds between each round of pings (default is 300 seconds = 5 minutes).
+   - `pings` is the number of pings sent in each round.
+
+3. To change the frequency, set `step` to your desired interval (e.g., `step = 60` for 1 minute).
+
+4. Save the file and restart the container:
+
+   ```sh
+   docker-compose restart
+   ```
+
+**Note:** Lowering the `step` value increases the frequency of pings and may increase system and network load.
+
+## 8. Adding a New Target for Probe
+
+To monitor a new target (host or IP address) with SmokePing, follow these steps:
+
+1. Open the `config/Targets` file in your `config` directory (created after the first run).
+
+2. The file should look like this:
+
+   ```sh
+   + Targets
+   menu = Top
+   title = Network Latency Grapher
+
+   ++ Example
+   menu = Example
+   title = Example Host
+   host = example.com
+   ```
+
+3. To add a new target, copy the `++ Example` block and modify it. For example, to add a target for `google.com`:
+
+   ```sh
+   ++ Google
+   menu = Google
+   title = Google
+   host = google.com
+   ```
+
+   - `++ Google` is the unique identifier for the target.
+   - `menu` is the label shown in the web interface.
+   - `title` is the title for the graph.
+   - `host` is the hostname or IP address to probe.
+
+4. Save the file and restart the container:
+
+   ```sh
+   docker-compose restart
+   ```
+
+After restarting, the new target will appear in the SmokePing web interface and monitoring will begin automatically.
+
 ---
 
 **You're all set!**  
