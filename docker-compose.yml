@@ -1,0 +1,15 @@
+version: "2.1"
+services:
+  smokeping:
+    image: lscr.io/linuxserver/smokeping:latest
+    container_name: smokeping
+    restart: unless-stopped
+    environment:
+      - PUID=1000   # 自定义，可以是用户名，也可以是 UID，如果不懂，填 root
+      - PGID=1000   # 自定义，可以是组名，也可以是 UID，如果不懂，填 root
+      - TZ=Asia/Shanghai
+    volumes:
+      - ./config:/config
+      - ./data:/data
+    ports:
+      - 8899:80
